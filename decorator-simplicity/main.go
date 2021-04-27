@@ -15,7 +15,7 @@ func main() {
 	)
 }
 
-//Client sends http.Requests and returns http.Responses on errors in case if failure
+//Client sends http.Requests and returns http.Responses on errors in case if failure.
 type Client interface {
 	Do(*http.Request) (*http.Response, error)
 }
@@ -27,10 +27,10 @@ func (f ClientFunc) Do(r *http.Request) (*http.Response, error) {
 	return f(r)
 }
 
-//Decorator wraps a Client with extra behaviour
+//Decorator wraps a Client with extra behaviour.
 type Decorator func(Client) Client
 
-//Decorate decorated a Client c with all the given Decorators, in order
+//Decorate decorated a Client c with all the given Decorators, in order.
 func Decorate(c Client, ds ...Decorator) Client {
 	decorated := c
 	for _, decorate := range ds {
@@ -54,12 +54,12 @@ func FaultTolerance(attempts int, backoff time.Duration) Decorator {
 	}
 }
 
-//Authorization returns a Decorator that authorizes every Client request with the given token
+//Authorization returns a Decorator that authorizes every Client request with the given token.
 func Authorization(token string) Decorator {
 	return Header("Authorization", token)
 }
 
-//Header returns a Decorator that adds the given HTTP header to every request done by a Client
+//Header returns a Decorator that adds the given HTTP header to every request done by a Client.
 func Header(name, value string) Decorator {
 	return func(c Client) Client {
 		return ClientFunc(func(r *http.Request) (*http.Response, error) {
