@@ -20,7 +20,7 @@ type Client interface {
 	Do(*http.Request) (*http.Response, error)
 }
 
-//ClientFunc is a function type that implements the Client interface
+//ClientFunc is a function type that implements the Client interface.
 type ClientFunc func(r *http.Request) (res *http.Response, err error)
 
 func (f ClientFunc) Do(r *http.Request) (*http.Response, error) {
